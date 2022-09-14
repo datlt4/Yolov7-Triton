@@ -1,0 +1,15 @@
+name: services
+
+windows:
+  - vizgard:
+      root: ~/triton-inference/Yolov7-Triton
+      layout: 67b5,412x95,0,0[412x50,0,0{206x50,0,0,14,205x50,207,0,17},412x44,0,51{206x44,0,51,15,205x44,207,51,16}]
+      panes:
+        - triton:
+          - /usr/bin/docker run --gpus 1 --rm --name=triton-server --shm-size=1g --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -p8000:8000 -p8001:8001 -p8002:8002 -v$(pwd)/models:/models nvcr.io/nvidia/tritonserver:21.10-py3 tritonserver --model-repository=/models --strict-model-config=false --grpc-infer-allocation-pool-size=16 --log-verbose 1
+        - API:
+          - /home/alexvizgard/anaconda3/bin/conda activate triton && cd client/python && python app.py
+        - htop:
+          - /usr/bin/htop
+        - nvtop:
+          - /usr/local/bin/nvtop
