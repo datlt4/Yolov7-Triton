@@ -1,4 +1,4 @@
-# my-first-triton-example
+# Yolov7-Triton
 
 ## Prepare
 
@@ -20,30 +20,27 @@
 ## Start triton server
 
 ```bash
-docker run --gpus 1 --rm \
---name=triton-server \
---shm-size=1g \
---ipc=host \
---ulimit memlock=-1 \
---ulimit stack=67108864 \
--p8000:8000 -p8001:8001 -p8002:8002 \
--v$(pwd)/models:/models \
-nvcr.io/nvidia/tritonserver:21.10-py3 tritonserver \
---model-repository=/models \
---strict-model-config=false \
---grpc-infer-allocation-pool-size=16 \
---log-verbose 1
+docker run --gpus all --rm \
+    --name=triton-server \
+    --shm-size=1g \
+    --ipc=host \
+    --ulimit memlock=-1 \
+    --ulimit stack=67108864 \
+    -p8000:8000 -p8001:8001 -p8002:8002 \
+    -v$(pwd)/models:/models \
+    nvcr.io/nvidia/tritonserver:21.10-py3 tritonserver \
+    --model-repository=/models \
+    --strict-model-config=false \
+    --grpc-infer-allocation-pool-size=16 \
+    --log-verbose 1
 ```
 
 ```
-+--------------------+---------+--------+
-| Model              | Version | Status |
-+--------------------+---------+--------+
-| alphapose-trt      | 1       | READY  |
-| deepsort-trt       | 1       | READY  |
-| yolov4-darknet-trt | 1       | READY  |
-| yolov4-tensorrtx   | 1       | READY  |
-+--------------------+---------+--------+
++------------+---------+--------+
+| Model      | Version | Status |
++------------+---------+--------+
+| yolov7-trt | 1       | READY  |
++------------+---------+--------+
 .
 .
 .
@@ -68,7 +65,7 @@ cd ${WORKING_DIR}/client/python/
 
 conda env create -f environment.yml
 conda activate triton
-$(which python) -m pip install nvidia-pyindex tritonclient[all] Flask flask-cors
+$(which python) -m pip install nvidia-pyindex tritonclient[all] requests Flask flask-cors
 ```
 
 ### Run examples
