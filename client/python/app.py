@@ -18,18 +18,16 @@ def root():
 @app.route("/inference", methods=["POST"])
 @cross_origin(supports_credentials=True)
 def inference():
-    filestr = request.files["file"]
-    file_bytes = np.fromstring(filestr.read(), np.uint8)
+    f = request.files["file"]
+    file_bytes = np.fromstring(f.read(), np.uint8)
     # convert numpy array to image
     image = cv2.imdecode(file_bytes, cv2.IMREAD_UNCHANGED)
     result = client_yolov7.triton_infer(image)
     bbox = []
     for r in result:
         bbox.append(r.to_json(client_yolov7.class_id))
-    return {"bounding_box": bbox}
+    return {"filename": f.name, "bounding_box": bbox}
 
 
 if __name__=="__main__":
     app.run(host="0.0.0.0", port=8003, ssl_context='adhoc')
-
-
