@@ -8,6 +8,13 @@ app = Flask(__name__)
 CORS(app, support_credentials=True)
 client_yolov7 = TritonClientYolov7()
 
+
+@app.route("/", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def root():
+    return "Yolov7 Triton server"
+
+
 @app.route("/inference", methods=["POST"])
 @cross_origin(supports_credentials=True)
 def inference():
@@ -23,4 +30,6 @@ def inference():
 
 
 if __name__=="__main__":
-    app.run(host="0.0.0.0", port=8003)
+    app.run(host="0.0.0.0", port=8003, ssl_context='adhoc')
+
+
