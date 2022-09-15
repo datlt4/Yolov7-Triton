@@ -26,7 +26,7 @@ def inference():
     bbox = []
     for r in result:
         bbox.append(r.to_json(client_yolov7.class_id))
-    return {"filename": f.name, "bounding_box": bbox}
+    return {"filename": f.filename, "bounding_box": bbox}
 
 
 if __name__=="__main__":
