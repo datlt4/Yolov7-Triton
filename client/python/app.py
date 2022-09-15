@@ -8,12 +8,10 @@ app = Flask(__name__)
 CORS(app, support_credentials=True)
 client_yolov7 = TritonClientYolov7()
 
-
 @app.route("/", methods=["GET"])
 @cross_origin(supports_credentials=True)
 def root():
     return "Yolov7 Triton server"
-
 
 @app.route("/inference", methods=["POST"])
 @cross_origin(supports_credentials=True)
@@ -26,7 +24,7 @@ def inference():
     bbox = []
     for r in result:
         bbox.append(r.to_json(client_yolov7.class_id))
-    return {"filename": f.filename, "bounding_box": bbox}
+    return jsonify({"filename": f.filename, "bounding_box": bbox}) 
 
 
 if __name__=="__main__":
