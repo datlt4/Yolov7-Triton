@@ -65,7 +65,7 @@ cd ${WORKING_DIR}/client/python/
 
 conda env create -f environment.yml
 conda activate triton
-$(which python) -m pip install nvidia-pyindex tritonclient[all] requests Flask flask-cors
+$(which python) -m pip install nvidia-pyindex tritonclient[all] requests Flask flask-cors pyopenssl
 ```
 
 ### Run examples
