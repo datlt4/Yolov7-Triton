@@ -13,10 +13,6 @@
 
 ### Build TensorRT engines
 
-- Follow below instructions: [Yolov4-Tensorrtx](https://github.com/isarsoft/yolov4-triton-tensorrt/tree/b42dd1faf50e516b3943eafd3c15408f536bf1c5#build-tensorrt-engine), [Yolov4-darknet, Deepsort, Alphapose](https://github.com/LuongTanDat/Yolov4-AlphaPose-MOT-Trt#build-project)
-
-- Or pull converted models use dvc if you are using the same hardware specification: `dvc pull`, send to email `20150837@student.hust.edu.vn` to request access
-
 ## Start triton server
 
 ```bash
